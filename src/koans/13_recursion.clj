@@ -1,20 +1,42 @@
 (defn is-even? [n]
   (if (= n 0)
-    __
-    (___ (is-even? (dec n)))))
+    true
+    (= false (is-even? (dec n)))))
 
 (defn is-even-bigint? [n]
   (loop [n   n
          acc true]
     (if (= n 0)
-      __
+      acc
       (recur (dec n) (not acc)))))
 
+;;
+;; reverse col
+;;   case (n:[]) = n
+;;   case (n:ns) = (reverse ns):n
+;;
+;; This one works, but it will overflow the stack. The one below uses tail
+;; recursion.
+;;  (if (= 1 (count coll))
+;;    coll
+;;    (concat (recursive-reverse (rest coll)) (list (first coll)))))
+;;
 (defn recursive-reverse [coll]
-  __)
+  (loop [coll coll
+         acc  ()]
+    (if (empty? coll)
+      acc
+      (recur (rest coll) (cons (first coll) acc)))))
 
+
+;; This works just fine. For some reason though, this just hangs:
+;;    (map factorial (range 10))
 (defn factorial [n]
-  __)
+  (loop [n     n
+         acc   1]
+    (if (= n 1)
+      acc
+      (recur (dec n) (* acc n)))))
 
 (meditations
   "Recursion ends with a base case"
